@@ -13,7 +13,7 @@
 (defvar org-blog-packages
   '(
     ;; package org-blogs go here
-    htmlize
+    ;; htmlize
     s
     org
     )
@@ -30,8 +30,8 @@ which require an initialization must be listed explicitly in the list.")
   (use-package s)
   )
 
-(defun org-blog/init-htmlize()
-  (use-package htmlize))
+;; (defun org-blog/init-htmlize()
+;;   (use-package htmlize))
 ;;
 ;; Often the body of an initialize function uses `use-package'
 ;; For more info on `use-package', see readme:

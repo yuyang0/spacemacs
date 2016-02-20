@@ -24,19 +24,34 @@
 
 ;;
 ;;; Code:
-;; (require 's)
-;; (require 'ox-publish)
+(with-eval-after-load 'org
+  (require 's)
 
-(defgroup personal-blog nil
-  "Personal static blog."
-  :group 'editing)
+  ;; stop treating [n] as footnote
+  (require 'ox-publish)
+  (defun my-ignore-false-footnotes (ast backend info)
+    (org-element-map ast 'footnote-reference
+      (lambda (f)
+        (let ((label (org-element-property :label f)))
+          (when (org-string-match-p "\\`[0-9]+\\'" label)
+            (org-element-set-element
+             f
+             (concat "[" label "]"
+                     (make-string (org-element-property :post-blank f) ?\s)))))))
+    ast)
 
-(defcustom personal-blog-home-link "https://yuyang0.github.io/"
-  "The home link of personal static blog."
-  :type 'string
-  :group 'personal-blog)
+  (add-to-list 'org-export-filter-parse-tree-functions #'my-ignore-false-footnotes)
 
-(defvar header-str "<div id=\"header\">
+  (defgroup personal-blog nil
+    "Personal static blog."
+    :group 'editing)
+
+  (defcustom personal-blog-home-link "https://yuyang0.github.io/"
+    "The home link of personal static blog."
+    :type 'string
+    :group 'personal-blog)
+
+  (defvar header-str "<div id=\"header\">
       <div class=\"inner\">
         <h1 id=\"site-title\"><a href=\"/\"> 编码者言 </a></h1>
         <div>
@@ -61,7 +76,7 @@
     </div>
 ")
 
-(defvar disqus-str "<div id=\"disqus_comment\">
+  (defvar disqus-str "<div id=\"disqus_comment\">
   <div id=\"disqus_thread\"></div>
     <script type=\"text/javascript\">
         var url = window.location.pathname;
@@ -81,7 +96,7 @@
 </div>
 ")
 
-(defvar duoshuo-str "<!-- 多说评论框 start -->
+  (defvar duoshuo-str "<!-- 多说评论框 start -->
   <div id=\"duoshuo-id\" class=\"ds-thread\" data-thread-key=\"请将此处替换成文章在你的站点中的ID\" data-title=\"请替换成文章的标题\" data-url=\"请替换成文章的网址\"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
@@ -112,7 +127,7 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
   </script>
 <!-- 多说公共JS代码 end -->")
 
-(defvar footer-str "<!-- begin footer -->
+  (defvar footer-str "<!-- begin footer -->
 <div id=\"footer\">
   <ul class=\"links vertical-nav\">
     <li><a href=\"/sitemap.xml\">Sitemap</a></li>
@@ -130,103 +145,103 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
 <script type=\"text/javascript\" src=\"static/js/custom.js\"></script>
 <!-- end footer -->")
 
-(setq org-publish-project-alist
-      `(
-        ("blog-notes"
-         :base-directory "~/Documents/note/"
-         :base-extension "org"
-         :publishing-directory "~/Documents/blog/"
-         :exclude "others"              ;skip the others directory
-         :recursive t
-         :publishing-function org-html-publish-to-html
-         :headline-levels 5
-         :section-numbers nil
-         :auto-preamble t
-         :auto-sitemap t
-         :sitemap-function org-publish-sitemap-rss-tags
-         :sitemap-filename "sitemap.org"
-         :sitemap-title "Sitemap"
-         :author "Yu Yang"
-         :email "yy2012cn@gmail.com"
-         :html-head  "<link rel=\"stylesheet\" type=\"text/css\" href=\"static/css/main.css\"/>
+  (setq org-publish-project-alist
+        `(
+          ("blog-notes"
+           :base-directory "~/Documents/note/"
+           :base-extension "org"
+           :publishing-directory "~/Documents/blog/"
+           :exclude "others"              ;skip the others directory
+           :recursive t
+           :publishing-function org-html-publish-to-html
+           :headline-levels 5
+           :section-numbers nil
+           :auto-preamble t
+           :auto-sitemap t
+           :sitemap-function org-publish-sitemap-rss-tags
+           :sitemap-filename "sitemap.org"
+           :sitemap-title "Sitemap"
+           :author "Yu Yang"
+           :email "yy2012cn@gmail.com"
+           :html-head  "<link rel=\"stylesheet\" type=\"text/css\" href=\"static/css/main.css\"/>
 <link rel=\"shortcut icon\" href=\"static/img/favicon.ico\" />"
-         :html-preamble ,header-str
-         :html-postamble ,(concat duoshuo-str footer-str)
-         )
-        ("blog-static"
-         :base-directory "~/Documents/note/"
-         :base-extension "css\\|js\\|pdf\\|png\\|jpg\\|gif\\|mp3\\|ogg\\|swf\\|ico\\|svg"
-         :publishing-directory "~/Documents/blog/"
-         :recursive t
-         :publishing-function org-publish-attachment
-         )
-        ;;("blog" :components ("root" "notes" "articles" "static"))
-        ("blog" :components ("blog-notes" "blog-static"))
-        ))
+           :html-preamble ,header-str
+           :html-postamble ,(concat duoshuo-str footer-str)
+           )
+          ("blog-static"
+           :base-directory "~/Documents/note/"
+           :base-extension "css\\|js\\|pdf\\|png\\|jpg\\|gif\\|mp3\\|ogg\\|swf\\|ico\\|svg"
+           :publishing-directory "~/Documents/blog/"
+           :recursive t
+           :publishing-function org-publish-attachment
+           )
+          ;;("blog" :components ("root" "notes" "articles" "static"))
+          ("blog" :components ("blog-notes" "blog-static"))
+          ))
 
-(defun org-publish-sitemap-rss-tags (project &optional sitemap-filename)
-  "Create sitemap.xml and rss feed for `PROJECT'."
-  (org-publish-org-sitemap project sitemap-filename)
-  (org-publish-sitemap-xml project)
-  (org-publish-rss-xml project)
-  (org-publish-tags project))
+  (defun org-publish-sitemap-rss-tags (project &optional sitemap-filename)
+    "Create sitemap.xml and rss feed for `PROJECT'."
+    (org-publish-org-sitemap project sitemap-filename)
+    (org-publish-sitemap-xml project)
+    (org-publish-rss-xml project)
+    (org-publish-tags project))
 
-(defun org-publish-sitemap-xml (project &optional sitemap-filename)
-  "Create sitemap.xml for `PROJECT'."
-  (let* ((project-plist (cdr project))
-         (base-dir (file-name-as-directory
-                    (expand-file-name (plist-get project-plist :base-directory))))
-         (pub-dir (file-name-as-directory
-                   (expand-file-name (plist-get project-plist :publishing-directory))))
-         (exclude-regexp (plist-get project-plist :exclude))
-	 (files (nreverse
-                 (org-publish-get-base-files project exclude-regexp)))
-         (base-link personal-blog-home-link)
-         (sitemap-filename (expand-file-name "sitemap.xml" pub-dir))
-         (visiting (find-buffer-visiting sitemap-filename))
-         sitemap-buffer)
+  (defun org-publish-sitemap-xml (project &optional sitemap-filename)
+    "Create sitemap.xml for `PROJECT'."
+    (let* ((project-plist (cdr project))
+           (base-dir (file-name-as-directory
+                      (expand-file-name (plist-get project-plist :base-directory))))
+           (pub-dir (file-name-as-directory
+                     (expand-file-name (plist-get project-plist :publishing-directory))))
+           (exclude-regexp (plist-get project-plist :exclude))
+           (files (nreverse
+                   (org-publish-get-base-files project exclude-regexp)))
+           (base-link personal-blog-home-link)
+           (sitemap-filename (expand-file-name "sitemap.xml" pub-dir))
+           (visiting (find-buffer-visiting sitemap-filename))
+           sitemap-buffer)
 
-    (with-current-buffer (setq sitemap-buffer
-                               (or visiting (find-file sitemap-filename)))
-      (erase-buffer)
-      (insert "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+      (with-current-buffer (setq sitemap-buffer
+                                 (or visiting (find-file sitemap-filename)))
+        (erase-buffer)
+        (insert "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 
 <urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">
 ")
-      (dolist (afile files)
-        (let* ((cur-url (concat base-link
-                                (replace-regexp-in-string "\.org$" "\.html"
-                                                          (file-relative-name afile base-dir))))
-               (entry-str (format "<url>
+        (dolist (afile files)
+          (let* ((cur-url (concat base-link
+                                  (replace-regexp-in-string "\.org$" "\.html"
+                                                            (file-relative-name afile base-dir))))
+                 (entry-str (format "<url>
       <loc>%s</loc>
       <lastmod>%s</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.5</priority>
    </url>
 " cur-url (format-time-string "%Y-%m-%d" (org-publish-find-date afile)))))
-          (insert entry-str)))
-      (insert "</urlset>")
-      (save-buffer))
-    (or visiting (kill-buffer sitemap-buffer))))
+            (insert entry-str)))
+        (insert "</urlset>")
+        (save-buffer))
+      (or visiting (kill-buffer sitemap-buffer))))
 
-(defun org-publish-rss-xml (project &optional sitemap-filename)
-  "Create rss feed for `PROJECT'."
-  (let* ((project-plist (cdr project))
-         (base-dir (file-name-as-directory
-                    (expand-file-name (plist-get project-plist :base-directory))))
-         (pub-dir (file-name-as-directory
-                   (expand-file-name (plist-get project-plist :publishing-directory))))
-         (exclude-regexp (plist-get project-plist :exclude))
-	 (files (nreverse (org-publish-get-base-files project exclude-regexp)))
-         (base-link personal-blog-home-link)
-         (rss-filename (expand-file-name "atom.xml" pub-dir))
-         (visiting (find-buffer-visiting rss-filename))
-         rss-buffer)
+  (defun org-publish-rss-xml (project &optional sitemap-filename)
+    "Create rss feed for `PROJECT'."
+    (let* ((project-plist (cdr project))
+           (base-dir (file-name-as-directory
+                      (expand-file-name (plist-get project-plist :base-directory))))
+           (pub-dir (file-name-as-directory
+                     (expand-file-name (plist-get project-plist :publishing-directory))))
+           (exclude-regexp (plist-get project-plist :exclude))
+           (files (nreverse (org-publish-get-base-files project exclude-regexp)))
+           (base-link personal-blog-home-link)
+           (rss-filename (expand-file-name "atom.xml" pub-dir))
+           (visiting (find-buffer-visiting rss-filename))
+           rss-buffer)
 
-    (with-current-buffer (setq rss-buffer
-                               (or visiting (find-file rss-filename)))
-      (erase-buffer)
-      (insert (format "<?xml version=\"1.0\"?>
+      (with-current-buffer (setq rss-buffer
+                                 (or visiting (find-file rss-filename)))
+        (erase-buffer)
+        (insert (format "<?xml version=\"1.0\"?>
 <feed xmlns=\"http://www.w3.org/2005/Atom\">
 
   <title></title>
@@ -240,12 +255,12 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
   </author>
 " base-link (current-time-string) base-link))
 
-      (dolist (afile files)
-        (let* ((id (file-name-nondirectory afile))
-               (title (org-publish-find-title afile))
-               (cur-url (replace-regexp-in-string "\.org$" "\.html"
-                                                  (concat base-link (file-relative-name afile base-dir))))
-               (entry-str (format "<entry>
+        (dolist (afile files)
+          (let* ((id (file-name-nondirectory afile))
+                 (title (org-publish-find-title afile))
+                 (cur-url (replace-regexp-in-string "\.org$" "\.html"
+                                                    (concat base-link (file-relative-name afile base-dir))))
+                 (entry-str (format "<entry>
     <id>%s</id>
     <link type=\"text/html\" rel=\"alternate\" href=\"%s\"/>
     <title>%s</title>
@@ -257,139 +272,140 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
     <content type=\"html\"> </content>
   </entry>" id cur-url title
   (format-time-string " %Y-%m-%d" (org-publish-find-date afile)) base-link)))
-          (insert entry-str)))
-      (insert "</feed>")
-      (save-buffer))
-    (or visiting (kill-buffer rss-buffer))))
+            (insert entry-str)))
+        (insert "</feed>")
+        (save-buffer))
+      (or visiting (kill-buffer rss-buffer))))
 
 
-(defun org-publish-find-keywords (file &optional reset)
-  "Find the KEYWORDS of FILE in project."
-  (or
-   (and (not reset) (org-publish-cache-get-file-property file :keywords nil t))
-   (let* ((org-inhibit-startup t)
-	  (visiting (find-buffer-visiting file))
-	  (buffer (or visiting (find-file-noselect file))))
-     (with-current-buffer buffer
-       (org-mode)
-       (let ((keywords
-	      (let ((property (plist-get (org-export-get-environment) :keywords)))
-		(if property (org-element-interpret-data property)
-		  nil))))
-	 (unless visiting (kill-buffer buffer))
-	 (org-publish-cache-set-file-property file :keywords keywords)
-	 keywords)))))
+  (defun org-publish-find-keywords (file &optional reset)
+    "Find the KEYWORDS of FILE in project."
+    (or
+     (and (not reset) (org-publish-cache-get-file-property file :keywords nil t))
+     (let* ((org-inhibit-startup t)
+            (visiting (find-buffer-visiting file))
+            (buffer (or visiting (find-file-noselect file))))
+       (with-current-buffer buffer
+         (org-mode)
+         (let ((keywords
+                (let ((property (plist-get (org-export-get-environment) :keywords)))
+                  (if property (org-element-interpret-data property)
+                    nil))))
+           (unless visiting (kill-buffer buffer))
+           (org-publish-cache-set-file-property file :keywords keywords)
+           keywords)))))
 
-(defun org-publish-tags (project)
-  "Create tags.org (specified by #+KEYWORDS) for `PROJECT'."
-  (let* ((project-plist (cdr project))
-         (base-dir (file-name-as-directory
-                    (expand-file-name (plist-get project-plist :base-directory))))
-         (exclude-regexp (plist-get project-plist :exclude))
-	 (files (nreverse (org-publish-get-base-files project exclude-regexp)))
-         (base-link personal-blog-home-link)
-         (tags-filename (expand-file-name "tags.org" base-dir))
-         (visiting (find-buffer-visiting tags-filename))
-         (tags-alist '())
-         tags-buffer)
+  (defun org-publish-tags (project)
+    "Create tags.org (specified by #+KEYWORDS) for `PROJECT'."
+    (let* ((project-plist (cdr project))
+           (base-dir (file-name-as-directory
+                      (expand-file-name (plist-get project-plist :base-directory))))
+           (exclude-regexp (plist-get project-plist :exclude))
+           (files (nreverse (org-publish-get-base-files project exclude-regexp)))
+           (base-link personal-blog-home-link)
+           (tags-filename (expand-file-name "tags.org" base-dir))
+           (visiting (find-buffer-visiting tags-filename))
+           (tags-alist '())
+           tags-buffer)
 
-    (with-current-buffer (setq tags-buffer
-                               (or visiting (find-file tags-filename)))
-      (erase-buffer)
-      (insert (concat "#+TITLE:tags\n"
-                      "#+OPTIONS: ^:nil toc:nil\n\n"))
-      (insert (format "#+HTML_HEAD_EXTRA: <script type=\"text/javascript\" src=\"http://libs.baidu.com/jquery/2.0.0/jquery.min.js\"> </script> \n"))
-      (insert (format "#+HTML_HEAD_EXTRA: <script type=\"text/javascript\" src=\"static/js/jquery.tagcloud.js\"> </script> \n"))
-      (insert (format "#+HTML_HEAD_EXTRA: <script type=\"text/javascript\" src=\"static/js/tags.js\"> </script> \n"))
+      (with-current-buffer (setq tags-buffer
+                                 (or visiting (find-file tags-filename)))
+        (erase-buffer)
+        (insert (concat "#+TITLE:tags\n"
+                        "#+OPTIONS: ^:nil toc:nil\n\n"))
+        (insert (format "#+HTML_HEAD_EXTRA: <script type=\"text/javascript\" src=\"http://libs.baidu.com/jquery/2.0.0/jquery.min.js\"> </script> \n"))
+        (insert (format "#+HTML_HEAD_EXTRA: <script type=\"text/javascript\" src=\"static/js/jquery.tagcloud.js\"> </script> \n"))
+        (insert (format "#+HTML_HEAD_EXTRA: <script type=\"text/javascript\" src=\"static/js/tags.js\"> </script> \n"))
 
-      (dolist (afile files)
-        (let* ((id (file-name-nondirectory afile))
-               (title (org-publish-find-title afile))
-               (keywords (org-publish-find-keywords afile 1)) ;;reset cache
-               (kw-lst (and keywords (s-split-words keywords)))
-               (cur-url (concat "file:"(file-relative-name afile base-dir)))
-               (cur-plist `(:title ,title :url ,cur-url)))
-          (dolist (kw kw-lst)
-            (let* ((entry (assoc kw tags-alist))
-                   (lst (cons cur-plist (and entry (cdr entry)))))
-              (setq tags-alist (cons `(,kw . ,lst)
-                                     (delq (assoc kw tags-alist) tags-alist)))))))
-      (dolist (entry tags-alist)
-        (let ((kw (car entry))
-              (lst (cdr entry)))
-          (insert (format "* %s\n" kw))
-          (insert (format "  :PROPERTIES:\n  :CUSTOM_ID: %s \n  :END:\n\n" kw))
-
-
-          (dolist (plist lst)
-            (let ((title (plist-get plist :title))
-                  (url (plist-get plist :url)))
-              (insert (format "  + [[%s][%s]]\n" url title))))
-          ))
-      (save-buffer))
-    (or visiting (kill-buffer tags-buffer))
-    ;; (org-insert-tags-to-index-org tags-alist (expand-file-name "index.org" base-dir))
-    ))
-
-(defun org-insert-tags-to-index-org (tags-alist index-filename)
-  "Insert tag links to Index.org."
-  (let ((visiting (find-buffer-visiting index-filename))
-        index-buffer)
-   (with-current-buffer (setq index-buffer
-                              (or visiting (find-file index-filename)))
-     (goto-char (point-min))
-     (if (search-forward "* Tags" nil t)
-         (progn
-           (beginning-of-line)
-           (delete-region (point) (point-max)))
-       (goto-char (point-max)))
-     (insert "* Tags\n")
-     (insert "  :PROPERTIES:\n  :CUSTOM_ID: tags \n  :END:\n\n")
-     (dolist (entry tags-alist)
-       (let ((kw (car entry)))
-         (insert (format "+ [[file:tags.org::#%s][%s]]\n" kw kw))))
-     (save-buffer))
-   (or visiting (kill-buffer index-buffer))))
+        (dolist (afile files)
+          (let* ((id (file-name-nondirectory afile))
+                 (title (org-publish-find-title afile))
+                 (keywords (org-publish-find-keywords afile 1)) ;;reset cache
+                 (kw-lst (and keywords (s-split-words keywords)))
+                 (cur-url (concat "file:"(file-relative-name afile base-dir)))
+                 (cur-plist `(:title ,title :url ,cur-url)))
+            (dolist (kw kw-lst)
+              (let* ((entry (assoc kw tags-alist))
+                     (lst (cons cur-plist (and entry (cdr entry)))))
+                (setq tags-alist (cons `(,kw . ,lst)
+                                       (delq (assoc kw tags-alist) tags-alist)))))))
+        (dolist (entry tags-alist)
+          (let ((kw (car entry))
+                (lst (cdr entry)))
+            (insert (format "* %s\n" kw))
+            (insert (format "  :PROPERTIES:\n  :CUSTOM_ID: %s \n  :END:\n\n" kw))
 
 
+            (dolist (plist lst)
+              (let ((title (plist-get plist :title))
+                    (url (plist-get plist :url)))
+                (insert (format "  + [[%s][%s]]\n" url title))))
+            ))
+        (save-buffer))
+      (or visiting (kill-buffer tags-buffer))
+      ;; (org-insert-tags-to-index-org tags-alist (expand-file-name "index.org" base-dir))
+      ))
 
-(setq org-html-mathjax-options '(
-                                 ;;(path "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
-                                 (path "http://cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
-                                 (scale "100")
-                                 (align "center")
-                                 (indent "2em")
-                                 (mathml t)))
-;; highlight the src block 
-(setq org-src-fontify-natively t)
+  (defun org-insert-tags-to-index-org (tags-alist index-filename)
+    "Insert tag links to Index.org."
+    (let ((visiting (find-buffer-visiting index-filename))
+          index-buffer)
+      (with-current-buffer (setq index-buffer
+                                 (or visiting (find-file index-filename)))
+        (goto-char (point-min))
+        (if (search-forward "* Tags" nil t)
+            (progn
+              (beginning-of-line)
+              (delete-region (point) (point-max)))
+          (goto-char (point-max)))
+        (insert "* Tags\n")
+        (insert "  :PROPERTIES:\n  :CUSTOM_ID: tags \n  :END:\n\n")
+        (dolist (entry tags-alist)
+          (let ((kw (car entry)))
+            (insert (format "+ [[file:tags.org::#%s][%s]]\n" kw kw))))
+        (save-buffer))
+      (or visiting (kill-buffer index-buffer))))
 
 
-;;---------------------------------------------------------
-;; Babel
-;;---------------------------------------------------------
-;; (require 'org-install)
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(
-;;    (sh . t)
-   (python . t)
-   (latex  . t)
-;;    (ruby . t)
-;;    (perl . t)
+  (setq org-html-mathjax-options '(
+                                   ;;(path "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+                                   (path "http://cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+                                   (scale "100")
+                                   (align "center")
+                                   (indent "2em")
+                                   (mathml t)))
+  ;; highlight the src block
+  (setq org-src-fontify-natively t)
 
-;;    (C . t)
-;;    ;; (cpp . t)
 
-;;    (ditaa . t)
-   (dot . t)
-;;    (R . t)
-;;    (octave . t)
-;;    (matlab . t)
-;;    (gnuplot . t)
-;;    (sqlite . t)
-   ))
-;; ;; don't confirm when evaluate the code
-(setq org-confirm-babel-evaluate nil)
-;; (provide 'personal-blog)
+  ;;---------------------------------------------------------
+  ;; Babel
+  ;;---------------------------------------------------------
+  ;; (require 'org-install)
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     ;;    (sh . t)
+     (python . t)
+     (latex  . t)
+     ;;    (ruby . t)
+     ;;    (perl . t)
+
+     ;;    (C . t)
+     ;;    ;; (cpp . t)
+
+     ;;    (ditaa . t)
+     (dot . t)
+     ;;    (R . t)
+     ;;    (octave . t)
+     ;;    (matlab . t)
+     ;;    (gnuplot . t)
+     ;;    (sqlite . t)
+     ))
+  ;; ;; don't confirm when evaluate the code
+  (setq org-confirm-babel-evaluate nil)
+  ;; (provide 'personal-blog)
 ;;; personal-blog.el ends here
+  )

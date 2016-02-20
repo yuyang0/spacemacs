@@ -30,14 +30,16 @@ values."
                       auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-private-snippets-directory nil)
      better-defaults
-     
+     colors
+
+     html
      emacs-lisp
      racket
      python
      lua
      c-c++
      javascript
-     (go :variables 
+     (go :variables
          gofmt-command "goimports")
 
      git
@@ -249,7 +251,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup t
+   dotspacemacs-whitespace-cleanup 'trailing
    ))
 
 (defun dotspacemacs/user-init ()
