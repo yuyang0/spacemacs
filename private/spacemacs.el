@@ -38,9 +38,13 @@ values."
      python
      lua
      c-c++
-     javascript
+     (javascript :variables
+                 js2-basic-offset 2
+                 js-indent-level 2)
      (go :variables
          gofmt-command "goimports")
+     yaml
+     sql
 
      git
      github
