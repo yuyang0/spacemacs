@@ -268,7 +268,9 @@ any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
 
   ;; load secret.el
-  (load-file (concat user-emacs-directory "private/secret.el"))
+  (let ((secret-file (expand-file-name "private/secret.el" user-emacs-directory)))
+    (when (file-exists-p secret-file)
+      (load secret-file)))
   )
 
 (defun dotspacemacs/user-config ()
