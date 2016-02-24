@@ -45,7 +45,10 @@ values."
          gofmt-command "goimports")
      yaml
      sql
-
+     (wakatime :variables
+               wakatime-api-key  WAKATIME-API-KEY
+               ;; use the actual wakatime path
+               wakatime-cli-path "/usr/local/bin/wakatime")
      git
      github
      markdown
@@ -263,6 +266,9 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
+
+  ;; load secret.el
+  (load-file (concat user-emacs-directory "private/secret.el"))
   )
 
 (defun dotspacemacs/user-config ()

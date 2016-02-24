@@ -22,6 +22,7 @@ gopm get -u -v golang.org/x/tools/cmd/gorename
 # for python
 sudo apt-get install -y python-pip
 sudo pip install  jedi==0.8.1 json-rpc==1.8.1 service_factory==0.1.2
+sudo pip install wakatime
 
 # for javascript
 sudo apt-get install -y nodejs npm
