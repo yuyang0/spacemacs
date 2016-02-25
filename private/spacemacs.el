@@ -53,6 +53,8 @@ values."
      github
      markdown
      org
+     dash
+     ;; chrome   ;; edit chrome textarea in emacs
 
      ;; (shell :variables
      ;;        shell-default-height 30
@@ -271,6 +273,9 @@ in `dotspacemacs/user-config'."
   (let ((secret-file (expand-file-name "private/secret.el" user-emacs-directory)))
     (when (file-exists-p secret-file)
       (load secret-file)))
+  ;; for chrome layer
+  ;; (setq edit-server-url-major-mode-alist
+  ;;       '(("github\\.com" . markdown-mode)))
   )
 
 (defun dotspacemacs/user-config ()
