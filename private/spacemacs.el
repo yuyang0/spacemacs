@@ -350,3 +350,10 @@ layers configuration. You are free to put any user code."
      ("" "[名词委审定]汉英药学名词" "powerword2007" nil)
      ("" "[名词委审定]汉英医学名词(三, 遗传学等)" "powerword2007" nil)
      ("" "[名词委审定]汉英医学名词(五, 眼科学)" "powerword2007" nil)))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
