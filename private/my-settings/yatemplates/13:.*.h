@@ -5,7 +5,7 @@
  *       Compiler:  gcc
  *
  *         Author:  `user-full-name`
- *			Email:  `user-mail-address`
+ *    			Email:  `user-mail-address`
  * ==================================================================
  */
 
@@ -15,4 +15,3 @@
 $0
 
 #endif /* _`(upcase (file-name-base buffer-file-name))`_H_ */
-

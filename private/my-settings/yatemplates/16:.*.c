@@ -5,8 +5,8 @@
  *        Created:  `(format-time-string "%Y-%m-%d %a %H:%M")`
  *       Compiler:  gcc
  *
- *         Author:  Yu Yang
- *			Email:  yy2012cn@NOSPAM.gmail.com
+ *         Author:  `user-full-name`
+ *    			Email:  `user-mail-address`
  * =======================================================================
  */
 $0
