@@ -58,7 +58,7 @@ values."
 
      (shell :variables
             shell-default-shell 'ansi-term
-            shell-default-term-shell "/bin/zsh"
+            shell-default-term-shell (locate-file "zsh" exec-path)
             shell-default-height 30
             shell-default-position 'bottom)
      ;; spell-checking
