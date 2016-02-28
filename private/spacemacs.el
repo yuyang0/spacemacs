@@ -278,6 +278,12 @@ in `dotspacemacs/user-config'."
   ;; for chrome layer
   ;; (setq edit-server-url-major-mode-alist
   ;;       '(("github\\.com" . markdown-mode)))
+
+  ;; for c-mode
+  (add-hook 'c-mode-common-hook
+            (lambda()
+              (c-set-style "k&r")
+              (setq c-basic-offset 4)))
   )
 
 (defun dotspacemacs/user-config ()
