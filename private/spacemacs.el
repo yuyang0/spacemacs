@@ -48,7 +48,7 @@ values."
      (wakatime :variables
                wakatime-api-key  WAKATIME-API-KEY
                ;; use the actual wakatime path
-               wakatime-cli-path "/usr/local/bin/wakatime")
+               wakatime-cli-path (locate-file "wakatime" exec-path))
      git
      github
      markdown
