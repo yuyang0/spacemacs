@@ -27,3 +27,6 @@ sudo pip install wakatime
 # for javascript
 sudo apt-get install -y nodejs npm
 sudo npm install -g tern js-beautify jshint
+
+# for c/c++
+sudo apt-get install clang
