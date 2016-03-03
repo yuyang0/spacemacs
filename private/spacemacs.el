@@ -43,6 +43,7 @@ values."
                  js-indent-level 2)
      (go :variables
          gofmt-command "goimports")
+     haskell
      yaml
      sql
      (wakatime :variables
