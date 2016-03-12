@@ -293,6 +293,16 @@ This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (global-linum-mode +1)
   (menu-bar-mode +1)
+  (dolist (pattern '(("\\.zsh\\'" . sh-mode)
+                     ("zlogin\\'" . sh-mode)
+                     ("zlogout\\'" . sh-mode)
+                     ("zprofile\\'" . sh-mode)
+                     ("zshenv\\'" . sh-mode)
+                     ("zshrc\\'" . sh-mode)
+                     ("bashrc\\'" . sh-mode)
+                     ("profile\\'" . sh-mode)))
+    (add-to-list 'auto-mode-alist pattern))
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
