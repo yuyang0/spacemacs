@@ -1,4 +1,34 @@
 * Release 0.105.x
+** 0.105.14 (2016/03/09)
+*** Fixes
+- Fix bad window index for =neotree= buffer (thanks to bmag)
+- Fix error when using ~SPC p l~ right after Emacs started (thanks to bixuanzju)
+*** Layer changes
+**** Go
+- Fix bug when there is no test suite when running tests
+  (thanks to bogdanteleaga)
+**** React
+- Fix broken =helm-imenu= (thanks to huaoguo)
+*** Improvements
+- Various documentation improvements (thanks to triklsbg)
+
+** 0.105.13 (2016/03/06)
+*** Fixes
+- Fix smooth-scroll toggling at startup (thanks to TheBB)
+- Fix auto-completion toggle ~SPC t a~ (thanks to TheBB)
+*** Layer changes
+**** Clojure
+- Fix function name =cider-pop-back= (thanks to mlachmih)
+**** Scala
+- Fix various function names:
+  - =ensime-refactor-diff-organize-imports=
+  - =ensime-refactor-diff-extract-method=
+  - =ensime-refactor-diff-rename=
+  - =ensime-refactor-diff-extract-local=
+  (thanks to TheBB)
+*** Improvements
+- Reformat =README.md= title section.
+- Add a GitHub pull request template (thanks to robbyoconnor)
 ** 0.105.12 (2016/03/02)
 *** Fixes
 - Fix activation of package dependencies
