@@ -266,12 +266,23 @@ values."
    dotspacemacs-whitespace-cleanup 'trailing
    ))
 
+(defun add-subfolders-to-load-path (parent-dir)
+  "Add all level PARENT-DIR subdirs to the `load-path'."
+  (dolist (f (directory-files parent-dir))
+    (let ((name (expand-file-name f parent-dir)))
+      (when (and (file-directory-p name)
+                 (not (string-prefix-p "." f)))
+        (add-to-list 'load-path name)
+        (add-subfolders-to-load-path name)))))
+
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
 
+  (add-to-list 'load-path (expand-file-name "private/vendor" user-emacs-directory))
+  (add-subfolders-to-load-path (expand-file-name "private/vendor" user-emacs-directory))
   ;; load secret.el
   (let ((secret-file (expand-file-name "private/secret.el" user-emacs-directory)))
     (when (file-exists-p secret-file)
@@ -307,72 +318,3 @@ layers configuration. You are free to put any user code."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ahs-case-fold-search nil)
- '(ahs-default-range (quote ahs-range-whole-buffer))
- '(ahs-idle-interval 0.25)
- '(ahs-idle-timer 0 t)
- '(ahs-inhibit-face-list nil)
- '(exec-path-from-shell-variables (quote ("PATH" "MANPATH" "GOROOT" "GOPATH")))
- '(ring-bell-function (quote ignore) t)
- '(user-full-name "Yu Yang")
- '(user-mail-address "yy2012cn@NOSPAM.gmail.com")
- '(yasdcv-sdcv-dicts
-   (quote
-    (("jianminghy" "简明汉英词典" "powerword2007" nil)
-     ("jianmingyh" "简明英汉词典" "powerword2007" nil)
-     ("lanconghy" "懒虫简明汉英词典" nil nil)
-     ("lancongyh" "懒虫简明英汉词典" nil nil)
-     ("xdictyh" "XDICT英汉辞典" nil t)
-     ("xdicthy" "XDICT汉英辞典" nil t)
-     ("xiandai" "现代英汉综合大辞典" "powerword2007" t)
-     ("niujing" "牛津高阶英汉双解" "oald" t)
-     ("" "英文相关词典" "powerword2007" nil)
-     ("langdaohy" "朗道汉英字典5.0" "langdao" nil)
-     ("langdaoyh" "朗道英汉字典5.0" "langdao" t)
-     ("21shiji" "21世纪英汉汉英双向词典" "21cen" nil)
-     ("21shjikj" "21世纪双语科技词典" " nil" nil)
-     ("" "新世纪英汉科技大词典" nil nil)
-     ("" "新世纪汉英科技大词典" nil nil)
-     ("" "现代商务汉英大词典" "powerword2007" nil)
-     ("" "英汉双解计算机词典" "powerword2007" t)
-     ("" "汉语成语词典" "chengyu" t)
-     ("" "高级汉语大词典" nil nil)
-     ("" "现代汉语词典" nil nil)
-     ("" "Cantonese Simp-English" nil nil)
-     ("" "英汉进出口商品词汇大全" nil nil)
-     ("" "中国大百科全书2.0版" nil t)
-     ("" "CEDICT汉英辞典" nil nil)
-     ("" "英文字根字典" nil t)
-     ("" "湘雅医学专业词典" nil nil)
-     ("" "[七国语言]英汉化学大词典" "powerword2007" nil)
-     ("" "[七国语言]英汉数学大词典" "powerword2007" nil)
-     ("" "[七国语言]英汉公共大词典" "powerword2007" nil)
-     ("" "[七国语言]英汉医学大词典" "powerword2007" nil)
-     ("" "[七国语言]英汉信息大词典" "powerword2007" nil)
-     ("" "[七国语言]英汉生物学大词典" "powerword2007" nil)
-     ("" "[名词委审定]英汉铁道科技名词" "powerword2007" nil)
-     ("" "[名词委审定]汉英细胞生物学名词" "powerword2007" nil)
-     ("" "[名词委审定]汉英数学名词" "powerword2007" nil)
-     ("" "[名词委审定]汉英医学名词(七, 整形、美容、皮肤、康复)" "powerword2007" nil)
-     ("" "[名词委审定]汉英医学名词(四, 心血管病学等)" "powerword2007" nil)
-     ("" "[名词委审定]汉英医学名词(一, 妇产科学)" "powerword2007" nil)
-     ("" "[名词委审定]汉英生物化学名词" "powerword2007" nil)
-     ("" "[名词委审定]英汉生物化学名词" "powerword2007" nil)
-     ("" "[名词委审定]汉英医学名词(二, 口腔学)" "powerword2007" nil)
-     ("" "[名词委审定]汉英医学名词(六, 外科)" "powerword2007" nil)
-     ("" "[名词委审定]汉英人体解剖学名词" "powerword2007" nil)
-     ("" "[名词委审定]汉英药学名词" "powerword2007" nil)
-     ("" "[名词委审定]汉英医学名词(三, 遗传学等)" "powerword2007" nil)
-     ("" "[名词委审定]汉英医学名词(五, 眼科学)" "powerword2007" nil)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))

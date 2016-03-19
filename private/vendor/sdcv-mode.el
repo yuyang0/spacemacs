@@ -72,6 +72,11 @@ Word may contain some special characters:
                 nil nil word))
     (sdcv-search-word word)))
 
+(defun sdcv-search-no-prompt()
+  "translate current word without prompt"
+  (interactive)
+  (sdcv-search-word (sdcv-current-word)))
+
 (defun sdcv-search-word (word)
   "Search WORD through the command-line tool sdcv.
 The result will be displayed in buffer named with

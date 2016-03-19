@@ -14,8 +14,7 @@
 ;; which require an initialization must be listed explicitly in the list.
 (setq my-settings-packages
     '(
-      url-shortener 
-      chinese-yasdcv
+      url-shortener
       yatemplate
       ;; package names go here
       ))
@@ -29,14 +28,6 @@
   "Initialize my package"
   (use-package url-shortener)
   )
-(defun my-settings/init-chinese-yasdcv()
-     "Initialize my package"
-     (use-package chinese-yasdcv
-       :config
-       (progn
-         (require 'chinese-yasdcv))
-       :bind ("C-c d" . yasdcv-translate-at-point))
-     )
 (defun my-settings/init-yatemplate()
   "Initialize my package"
   (use-package yatemplate
