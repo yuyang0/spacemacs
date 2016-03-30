@@ -50,6 +50,7 @@
             (evil-define-key 'normal sdcv-mode-map "c" 'hide-entry)
             ))
 (global-set-key (kbd "C-c d") 'sdcv-search-no-prompt)
+(spacemacs/set-leader-keys "o d" 'sdcv-search-no-prompt)
 
 (provide 'config)
 ;;; config.el ends here
