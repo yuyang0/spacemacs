@@ -51,6 +51,7 @@
             ))
 (global-set-key (kbd "C-c d") 'sdcv-search-no-prompt)
 (spacemacs/set-leader-keys "o d" 'sdcv-search-no-prompt)
+(spacemacs/set-leader-keys "o D" 'sdcv-search)
 
 (provide 'config)
 ;;; config.el ends here
