@@ -32,6 +32,9 @@ values."
      better-defaults
      colors
 
+     dockerfile
+     salt
+
      html
      emacs-lisp
      racket
