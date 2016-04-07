@@ -6,7 +6,7 @@
  *       Compiler:  gcc
  *
  *         Author:  `user-full-name`
- *    			Email:  `user-mail-address`
+ *          Email:  `user-mail-address`
  * =======================================================================
  */
 $0
