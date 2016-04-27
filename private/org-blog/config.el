@@ -370,7 +370,7 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
 
   (setq org-html-mathjax-options '(
                                    ;;(path "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
-                                   (path "http://cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+                                   (path "http://cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
                                    (scale "100")
                                    (align "center")
                                    (indent "2em")
