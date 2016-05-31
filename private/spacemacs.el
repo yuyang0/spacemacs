@@ -69,6 +69,8 @@ values."
      syntax-checking
      ;; version-control
 
+     plantuml
+
      org-blog
      my-settings
      )
@@ -293,6 +295,12 @@ in `dotspacemacs/user-config'."
   ;; for chrome layer
   ;; (setq edit-server-url-major-mode-alist
   ;;       '(("github\\.com" . markdown-mode)))
+
+  (with-eval-after-load 'org
+    (add-to-list
+     'org-src-lang-modes '("plantuml" . puml))
+    )
+  (setq org-plantuml-jar-path (expand-file-name "private/bin/plantuml.jar" user-emacs-directory))
 
   ;; for c-mode
   (add-hook 'c-mode-common-hook

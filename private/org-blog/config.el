@@ -398,6 +398,7 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
 
      ;;    (ditaa . t)
      (dot . t)
+     (plantuml . t)
      ;;    (R . t)
      ;;    (octave . t)
      ;;    (matlab . t)
