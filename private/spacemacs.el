@@ -2,6 +2,11 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
+(defvar *private-dir* (expand-file-name "private" user-emacs-directory))
+(defvar *private-bin-dir* (expand-file-name "bin" *private-dir*))
+(defvar *private-vendor-dir* (expand-file-name "vendor" *private-dir*))
+
+
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -286,27 +291,12 @@ It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
 
-  (add-to-list 'load-path (expand-file-name "private/vendor" user-emacs-directory))
-  (add-subfolders-to-load-path (expand-file-name "private/vendor" user-emacs-directory))
+  (add-to-list 'load-path *private-vendor-dir*)
+  (add-subfolders-to-load-path *private-vendor-dir*)
   ;; load secret.el
-  (let ((secret-file (expand-file-name "private/secret.el" user-emacs-directory)))
+  (let ((secret-file (expand-file-name "secret.el" *private-dir*)))
     (when (file-exists-p secret-file)
       (load secret-file)))
-  ;; for chrome layer
-  ;; (setq edit-server-url-major-mode-alist
-  ;;       '(("github\\.com" . markdown-mode)))
-
-  (with-eval-after-load 'org
-    (add-to-list
-     'org-src-lang-modes '("plantuml" . puml))
-    )
-  (setq org-plantuml-jar-path (expand-file-name "private/bin/plantuml.jar" user-emacs-directory))
-
-  ;; for c-mode
-  (add-hook 'c-mode-common-hook
-            (lambda()
-              (c-set-style "k&r")
-              (setq c-basic-offset 4)))
   )
 
 (defun dotspacemacs/user-config ()
@@ -321,9 +311,31 @@ layers configuration. You are free to put any user code."
                      ("zshenv\\'" . sh-mode)
                      ("zshrc\\'" . sh-mode)
                      ("bashrc\\'" . sh-mode)
-                     ("profile\\'" . sh-mode)))
+                     ("profile\\'" . sh-mode)
+
+                     ("\\.plantuml\\'" . puml-mode)
+                     ("\\.puml\\'" . puml-mode)
+                     ))
     (add-to-list 'auto-mode-alist pattern))
 
+  ;; for plantuml
+  (with-eval-after-load 'org
+    (add-to-list
+     'org-src-lang-modes '("plantuml" . puml)))
+
+  (let ((jar-file (expand-file-name "plantuml.jar" *private-bin-dir*)))
+    (setq org-plantuml-jar-path jar-file)
+    (setq puml-plantuml-jar-path jar-file))
+
+  ;; for chrome layer
+  ;; (setq edit-server-url-major-mode-alist
+  ;;       '(("github\\.com" . markdown-mode)))
+
+  ;; for c-mode
+  (add-hook 'c-mode-common-hook
+            (lambda()
+              (c-set-style "k&r")
+              (setq c-basic-offset 4)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
