@@ -26,6 +26,8 @@
 ;;; Code:
 (with-eval-after-load 'org
   (require 's)
+  ;; markdown export for emacs25
+  (require 'ox-md nil t)
 
   ;; stop treating [n] as footnote
   (require 'ox-publish)
