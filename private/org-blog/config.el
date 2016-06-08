@@ -79,22 +79,34 @@
 ")
 
   (defvar disqus-str "<div id=\"disqus_comment\">
-  <div id=\"disqus_thread\"></div>
-    <script type=\"text/javascript\">
-        var url = window.location.pathname;
-        var disqus_identifier = url.substring(url.lastIndexOf('/')+1);
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'yuyang'; // required: replace example with your forum shortname
+<div id=\"disqus_thread\"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
 
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href=\"http://disqus.com/?ref_noscript\">comments powered by Disqus.</a></noscript>
-    <a href=\"http://disqus.com\" class=\"dsq-brlink\">comments powered by <span class=\"logo-disqus\">Disqus</span></a>
+    var disqus_config = function () {
+        var url_path = window.location.pathname;
+        var disqus_identifier = url_path.substring(url_path.lastIndexOf('/')+1);
+        disqus_identifier? disqus_identifier: 'index';
+
+        var full_url = window.location.href.replace(/^http:/, 'https:');
+        this.page.url = full_url;
+        this.page.identifier = disqus_identifier;
+        // this.page.title = document.title;
+    };
+
+    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+        var d = document, s = d.createElement('script');
+
+        s.src = '//yuyang.disqus.com/embed.js';  // IMPORTANT: Replace EXAMPLE with your forum shortname!
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href=\"https://disqus.com/?ref_noscript\" rel=\"nofollow\">comments powered by Disqus.</a></noscript>
 </div>
 ")
 
@@ -140,7 +152,7 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
   <span>© 2013 Yu Yang's Blog, Created by org-mode and dropbox</span>
   <a href=\"#\" class=\"back-to-top\" id=\"fixed-back-to-top\" ></a>
 </div>
-<script src=\"http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js\"></script>
+<script src=\"//apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js\"></script>
 <script type=\"text/javascript\">
 	window.jQuery || document.write('<script src=\"static/js/jquery-2.0.0.min.js\"><\\/script>');
 	</script>
@@ -168,7 +180,7 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
            :html-head  "<link rel=\"stylesheet\" type=\"text/css\" href=\"static/css/main.css\"/>
 <link rel=\"shortcut icon\" href=\"static/img/favicon.ico\" />"
            :html-preamble ,header-str
-           :html-postamble ,(concat duoshuo-str footer-str)
+           :html-postamble ,(concat disqus-str footer-str)
            )
           ("blog-static"
            :base-directory "~/Documents/note/"
@@ -315,7 +327,7 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
         (erase-buffer)
         (insert (concat "#+TITLE:tags\n"
                         "#+OPTIONS: ^:nil toc:nil\n\n"))
-        (insert (format "#+HTML_HEAD_EXTRA: <script type=\"text/javascript\" src=\"http://libs.baidu.com/jquery/2.0.0/jquery.min.js\"> </script> \n"))
+        (insert (format "#+HTML_HEAD_EXTRA: <script type=\"text/javascript\" src=\"//libs.baidu.com/jquery/2.0.0/jquery.min.js\"> </script> \n"))
         (insert (format "#+HTML_HEAD_EXTRA: <script type=\"text/javascript\" src=\"static/js/jquery.tagcloud.js\"> </script> \n"))
         (insert (format "#+HTML_HEAD_EXTRA: <script type=\"text/javascript\" src=\"static/js/tags.js\"> </script> \n"))
 
@@ -372,7 +384,7 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
 
   (setq org-html-mathjax-options '(
                                    ;;(path "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
-                                   (path "http://cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+                                   (path "//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
                                    (scale "100")
                                    (align "center")
                                    (indent "2em")
