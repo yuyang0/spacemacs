@@ -258,7 +258,7 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
         (insert (format "<?xml version=\"1.0\"?>
 <feed xmlns=\"http://www.w3.org/2005/Atom\">
 
-  <title></title>
+  <title>编码者言</title>
   <link href=\"%s\"/>
   <link type=\"application/atom+xml\" rel=\"self\" href=\"/atom.xml\"/>
   <updated>%s</updated>
@@ -270,11 +270,13 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
 " base-link (current-time-string) base-link))
 
         (dolist (afile files)
-          (let* ((id (file-name-nondirectory afile))
-                 (title (org-publish-find-title afile))
-                 (cur-url (replace-regexp-in-string "\.org$" "\.html"
-                                                    (concat base-link (file-relative-name afile base-dir))))
-                 (entry-str (format "<entry>
+          ;; only include files in articles directory.
+          (when (s-match "articles" afile)
+              (let* ((id (file-name-nondirectory afile))
+                     (title (org-publish-find-title afile))
+                     (cur-url (replace-regexp-in-string "\.org$" "\.html"
+                                                        (concat base-link (file-relative-name afile base-dir))))
+                     (entry-str (format "<entry>
     <id>%s</id>
     <link type=\"text/html\" rel=\"alternate\" href=\"%s\"/>
     <title>%s</title>
@@ -286,7 +288,7 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
     <content type=\"html\"> </content>
   </entry>" id cur-url title
   (format-time-string " %Y-%m-%d" (org-publish-find-date afile)) base-link)))
-            (insert entry-str)))
+                (insert entry-str))))
         (insert "</feed>")
         (save-buffer))
       (or visiting (kill-buffer rss-buffer))))
@@ -294,20 +296,20 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
 
   (defun org-publish-find-keywords (file &optional reset)
     "Find the KEYWORDS of FILE in project."
-    (or
-     (and (not reset) (org-publish-cache-get-file-property file :keywords nil t))
-     (let* ((org-inhibit-startup t)
-            (visiting (find-buffer-visiting file))
+     (let* ((visiting (find-buffer-visiting file))
             (buffer (or visiting (find-file-noselect file))))
        (with-current-buffer buffer
-         (org-mode)
          (let ((keywords
-                (let ((property (plist-get (org-export-get-environment) :keywords)))
-                  (if property (org-element-interpret-data property)
-                    nil))))
+                (save-excursion
+                  (goto-char (point-min))
+                  (if (re-search-forward "#\\+KEYWORDS:" 500 t 1)
+                      (buffer-substring-no-properties (point) (line-end-position))
+                    ""))
+                ))
            (unless visiting (kill-buffer buffer))
-           (org-publish-cache-set-file-property file :keywords keywords)
-           keywords)))))
+           (s-trim keywords )))))
+
+  ;; (org-publish-find-keywords "~/Documents/note/notes/how-to-read-a-book.org" 1)
 
   (defun org-publish-tags (project)
     "Create tags.org (specified by #+KEYWORDS) for `PROJECT'."
@@ -421,6 +423,5 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
      ))
   ;; ;; don't confirm when evaluate the code
   (setq org-confirm-babel-evaluate nil)
-  ;; (provide 'personal-blog)
-;;; personal-blog.el ends here
+
   )
