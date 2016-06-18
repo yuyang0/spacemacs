@@ -340,6 +340,11 @@ layers configuration. You are free to put any user code."
             (lambda ()
               (setq flycheck-clang-language-standard "c++11")
               (setq flycheck-gcc-language-standard "c++11")))
+
+  (add-hook 'c-mode-hook
+            (lambda ()
+              (setq flycheck-clang-language-standard "gnu99")
+              (setq flycheck-gcc-language-standard "gnu99")))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
