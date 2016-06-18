@@ -336,6 +336,10 @@ layers configuration. You are free to put any user code."
             (lambda()
               (c-set-style "k&r")
               (setq c-basic-offset 4)))
+  (add-hook 'c++-mode-hook
+            (lambda ()
+              (setq flycheck-clang-language-standard "c++11")
+              (setq flycheck-gcc-language-standard "c++11")))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
