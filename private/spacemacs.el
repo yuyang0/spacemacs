@@ -46,18 +46,19 @@ values."
      python
      lua
      c-c++
+     latex
      (javascript :variables
                  js2-basic-offset 2
                  js-indent-level 2)
      (go :variables
          gofmt-command "goimports")
-     haskell
+     ;; haskell
      yaml
      sql
-     (wakatime :variables
-               wakatime-api-key  WAKATIME-API-KEY
-               ;; use the actual wakatime path
-               wakatime-cli-path (locate-file "wakatime" exec-path))
+     ;; (wakatime :variables
+     ;;           wakatime-api-key  WAKATIME-API-KEY
+     ;;           ;; use the actual wakatime path
+     ;;           wakatime-cli-path (locate-file "wakatime" exec-path))
      git
      github
      markdown
