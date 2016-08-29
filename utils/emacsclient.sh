@@ -10,6 +10,11 @@
 #         Email:  yy2012cn@NOSPAM.gmail.com
 #===============================================================================
 set -o nounset
+
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+
 ec=emacsclient
 emacsclient_installed=$(which emacsclient)
 if [ -z "$emacsclient_installed" ];then
