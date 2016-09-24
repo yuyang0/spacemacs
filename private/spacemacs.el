@@ -5,6 +5,7 @@
 (defvar *private-dir* (expand-file-name "private" user-emacs-directory))
 (defvar *private-bin-dir* (expand-file-name "bin" *private-dir*))
 (defvar *private-vendor-dir* (expand-file-name "vendor" *private-dir*))
+(defvar *private-personal-dir* (expand-file-name "personal" *private-dir*))
 
 
 (defun dotspacemacs/layers ()
@@ -43,7 +44,8 @@ values."
      html
      emacs-lisp
      racket
-     python
+     (python :variables
+             python-test-runner 'pytest)
      lua
      c-c++
      latex
@@ -292,6 +294,7 @@ It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
 
+  (add-to-list 'load-path *private-personal-dir*)
   (add-to-list 'load-path *private-vendor-dir*)
   (add-subfolders-to-load-path *private-vendor-dir*)
   ;; load secret.el

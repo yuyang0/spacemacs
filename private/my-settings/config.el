@@ -65,5 +65,9 @@
 
 (add-to-list 'auto-mode-alist '("\\.artist\\'" . artist-mode))
 
+;; for python
+(require 'personal-utils)
+(require 'personal-python)
+
 (provide 'config)
 ;;; config.el ends here
