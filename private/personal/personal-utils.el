@@ -372,7 +372,8 @@ the current buffer."
   "Enable proxy."
   (interactive)
   (setq url-proxy-services '(("no_proxy" . "work\\.com")
-                           ("http" . "127.0.0.1:7777"))))
+                           ("http" . "127.0.0.1:7777")
+                           ("https" . "127.0.0.1:7777"))))
 
 (defun personal-enable-settings ()
   "Enable settings according to major-mode."
