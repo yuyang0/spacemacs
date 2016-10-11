@@ -53,6 +53,7 @@ values."
                  js2-basic-offset 2
                  js-indent-level 2)
      (go :variables
+         go-tab-width 4
          gofmt-command "goimports")
      ;; haskell
      yaml
