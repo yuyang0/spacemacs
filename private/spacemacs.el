@@ -38,7 +38,7 @@ values."
      better-defaults
      colors
 
-     dockerfile
+     docker
      salt
 
      html
