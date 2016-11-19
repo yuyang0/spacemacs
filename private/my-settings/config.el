@@ -35,7 +35,7 @@
 
 (setq-default
  user-full-name "Yu Yang"
- user-mail-address "plusyuy@NOSPAM.gmail.com")
+ user-mail-address "yyangplus@NOSPAM.gmail.com")
 
 ;; for sdcv-mode
 (require 'sdcv-mode)
