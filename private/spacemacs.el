@@ -302,6 +302,11 @@ in `dotspacemacs/user-config'."
   (let ((secret-file (expand-file-name "secret.el" *private-dir*)))
     (when (file-exists-p secret-file)
       (load secret-file)))
+  ;; change elpa source
+  (setq configuration-layer--elpa-archives
+        '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
+          ("org-cn"   . "http://elpa.emacs-china.org/org/")
+          ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
   )
 
 (defun dotspacemacs/user-config ()
