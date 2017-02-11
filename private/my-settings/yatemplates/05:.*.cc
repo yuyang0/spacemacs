@@ -1,12 +1,4 @@
-/* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
-/*
- * =======================================================================
- *       Filename:  `(file-name-nondirectory buffer-file-name)`
- *        Created:  `(format-time-string "%Y-%m-%d %a %H:%M")`
- *       Compiler:  g++
- *
- *         Author:  `user-full-name`
- *          Email:  `user-mail-address`
- * =======================================================================
- */
+//
+// Created by `user-full-name` <`user-mail-address`> on `(format-time-string "%Y-%m-%d")`
+//
  $0
