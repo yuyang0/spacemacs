@@ -16,6 +16,7 @@
     '(
       url-shortener
       yatemplate
+      interleave
       ;; package names go here
       ))
 
@@ -38,6 +39,7 @@
       (setq yatemplate-dir (locate-user-emacs-file "private/my-settings/yatemplates"))
       (yatemplate-fill-alist)))
   )
+(defun my-settings/init-interleave() )
 ;; Often the body of an initialize function uses `use-package'
 ;; For more info on `use-package', see readme:
 ;; https://github.com/jwiegley/use-package

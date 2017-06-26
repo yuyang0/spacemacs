@@ -24,6 +24,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     nginx
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -66,7 +67,7 @@ values."
      github
      markdown
      org
-     dash
+     bibtex
      ;; chrome   ;; edit chrome textarea in emacs
 
      (shell :variables
@@ -79,6 +80,7 @@ values."
      ;; version-control
 
      plantuml
+     pdf-tools
 
      org-blog
      my-settings
@@ -355,6 +357,9 @@ layers configuration. You are free to put any user code."
             (lambda ()
               (setq flycheck-clang-language-standard "gnu99")
               (setq flycheck-gcc-language-standard "gnu99")))
+  (setq org-ref-default-bibliography '("~/Dropbox/papers/papers.bib")
+        org-ref-pdf-directory "~/Dropbox/papers/"
+        org-ref-bibliography-notes "~/Dropbox/papers/papers.org")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
