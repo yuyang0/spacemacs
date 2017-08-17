@@ -361,6 +361,12 @@ layers configuration. You are free to put any user code."
   (setq org-ref-default-bibliography '("~/Dropbox/papers/papers.bib")
         org-ref-pdf-directory "~/Dropbox/papers/"
         org-ref-bibliography-notes "~/Dropbox/papers/papers.org")
+  ;; paredit style bindings
+  (global-set-key (kbd "C-)") 'sp-forward-slurp-sexp)
+  (global-set-key (kbd "C-}") 'sp-forward-barf-sexp)
+  (global-set-key (kbd "C-(") 'sp-backward-slurp-sexp)
+  (global-set-key (kbd "C-{") 'sp-backward-barf-sexp)
+  (global-set-key (kbd "M-r") 'sp-raise-sexp)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
