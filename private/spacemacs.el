@@ -48,7 +48,12 @@ values."
      (python :variables
              python-test-runner 'pytest)
      lua
-     c-c++
+
+     gtags
+     semantic
+     (c-c++
+      :variables c-c++-enable-clang-support t)
+
      latex
      (javascript :variables
                  js2-basic-offset 2
