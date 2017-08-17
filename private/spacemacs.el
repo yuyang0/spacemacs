@@ -56,6 +56,7 @@ values."
      (go :variables
          go-tab-width 4
          gofmt-command "goimports")
+     octave
      ;; haskell
      yaml
      sql
