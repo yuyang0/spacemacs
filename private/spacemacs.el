@@ -49,7 +49,8 @@ values."
              python-test-runner 'pytest)
      lua
 
-     gtags
+     ;; gtags
+     cscope
      semantic
      (c-c++
       :variables c-c++-enable-clang-support t)
