@@ -24,5 +24,5 @@ fi
 export LC_CTYPE=zh_CN.UTF-8
 # emacsclient -a "" -c $*
 if ! $ec -c $* ; then
-    /usr/bin/env emacs $*
+    exec /usr/bin/env emacs $*
 fi
