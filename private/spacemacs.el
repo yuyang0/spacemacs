@@ -24,6 +24,9 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     ansible
+     rust
+     ruby
      nginx
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -373,6 +376,9 @@ layers configuration. You are free to put any user code."
   (global-set-key (kbd "C-(") 'sp-backward-slurp-sexp)
   (global-set-key (kbd "C-{") 'sp-backward-barf-sexp)
   (global-set-key (kbd "M-r") 'sp-raise-sexp)
+  ;; golang newline indent problem
+  (remove-hook 'post-command-hook 'clean-aindent--check-last-point)
+  (add-hook 'post-command-hook 'clean-aindent--check-last-point)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
