@@ -17,6 +17,7 @@
       url-shortener
       yatemplate
       interleave
+      org-mind-map
       ;; package names go here
       ))
 
@@ -40,6 +41,7 @@
       (yatemplate-fill-alist)))
   )
 (defun my-settings/init-interleave() )
+(defun my-settings/init-org-mind-map() )
 ;; Often the body of an initialize function uses `use-package'
 ;; For more info on `use-package', see readme:
 ;; https://github.com/jwiegley/use-package

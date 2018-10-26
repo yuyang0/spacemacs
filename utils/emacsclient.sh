@@ -16,7 +16,7 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 
 ec=emacsclient
-emacsclient_installed=$(which emacsclient)
+emacsclient_installed=$(which $ec)
 if [ -z "$emacsclient_installed" ];then
     ec=emacsclient.emacs-snapshot
 fi

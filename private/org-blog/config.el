@@ -172,7 +172,7 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
            :section-numbers nil
            :auto-preamble t
            :auto-sitemap t
-           :sitemap-function org-publish-sitemap-rss-tags
+           ;; :sitemap-function org-publish-sitemap-rss-tags
            :sitemap-filename "sitemap.org"
            :sitemap-title "Sitemap"
            :author "Yu Yang"
@@ -195,7 +195,7 @@ var duoshuoQuery = {short_name:\"yuyang0\"};
 
   (defun org-publish-sitemap-rss-tags (project &optional sitemap-filename)
     "Create sitemap.xml and rss feed for `PROJECT'."
-    (org-publish-org-sitemap project sitemap-filename)
+    (org-publish-sitemap project sitemap-filename)
     (org-publish-sitemap-xml project)
     (org-publish-rss-xml project)
     (org-publish-tags project))
